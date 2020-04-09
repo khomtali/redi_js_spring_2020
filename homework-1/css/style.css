@@ -33,7 +33,7 @@ header {
     color: #fff;
 }
 
-.active a {
+li:active a {
     text-decoration: underline;
     color: #fff;
 }
