@@ -28,12 +28,7 @@ header {
     color: #d492aa;
 }
 
-.menu a:hover {
-    text-decoration: underline;
-    color: #fff;
-}
-
-li:active a {
+.menu a:hover, .menu__link--active {
     text-decoration: underline;
     color: #fff;
 }
