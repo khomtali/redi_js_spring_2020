@@ -1,0 +1,84 @@
+body {
+    margin: 0;
+    font-family: 'Baloo Thambi 2', cursive;
+    color: #734d80;
+    background-color: #aef2dc;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    text-align: right;
+    padding: 0.5em;
+    font-weight: 600;
+    background-color: #734d80;
+}
+
+.menu {
+    margin: 0;
+}
+
+.menu li {
+    display: inline-block;
+    margin: 0 0.5em;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #d492aa;
+}
+
+.menu a:hover, .menu__link--active {
+    text-decoration: underline;
+    color: #fff;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+.place-box {
+    border-style: outset;
+    border-color: #d492aa;
+    margin: 1em 15%;
+    padding: 1em 2em;
+}
+
+.place-box h2 {
+    margin-top: 0;
+}
+
+.place-box__description {
+    margin-bottom: 0;
+}  
+
+.place-box figure {
+    margin: 0;
+    max-width: 100%;
+    font-size: 0.7em;
+}
+
+.place-box img {
+    width: 100%;
+}
+
+a {
+    color: #734d80;
+}
+
+a:visited {
+    color: #d492aa;
+}
+
+footer {
+    text-align: right;
+    font-size: 0.9em;
+    color: #d492aa;
+    background-color: #734d80;
+}
+
+footer p {
+    margin: 0;
+    padding: 0.3em;
+}
