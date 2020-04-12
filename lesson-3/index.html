@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS Buttons, Lesson 3</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <div>
+    <!-- during lesson -->
+    <button id="size-button">make me bigger</button>
+    <hr>
+    <button id="up-button">UP</button>
+    <p id="counter">0</p>
+    <button id="down-button">DOWN</button>
+    <hr>
+    <button id="counter-button">I've been clicked: 0 time</button>
+    <hr>
+    <!-- homework -->
+    <button id="good-button">Feel good</button>
+    <button id="awesome-button">Feel awesome</button>
+    <p id="mood">Current mood</p>
+    <hr>
+    <a id="burger" href="#"></a>
+  </div>
+  <script type="text/javascript">
+    // during lesson
+    const sizeBtnEl = document.getElementById('size-button'),
+        upBtnEl = document.getElementById('up-button'),
+        downBtnEl = document.getElementById('down-button'),
+        counterBtnEl = document.getElementById('counter-button'),
+        counterEl = document.getElementById('counter');
+    let clicks = 0,
+        sizeDiff = 30;
+    const delta = 80;
+
+    function makeBigger() {
+      sizeBtnEl.style.height = sizeDiff + 'px';
+      sizeBtnEl.style.width = (sizeDiff + delta) + 'px';
+      sizeDiff += 5;
+    }
+    function counterUp() {
+      counterEl.innerHTML++;
+      console.log('Counter goes up!');
+    }
+    function counterDown() {
+      counterEl.innerHTML--;
+      console.log('Counter goes down!');
+    }
+    function countClicks() {
+      clicks++;
+      counterBtnEl.innerHTML = 'I\'ve been clicked: ' + clicks + ' times';
+      console.log('Button was pressed!');
+    }
+
+    sizeBtnEl.addEventListener('click', makeBigger);
+    upBtnEl.addEventListener('click', counterUp);
+    downBtnEl.addEventListener('click', counterDown);
+    counterBtnEl.addEventListener('click', countClicks);
+    
+    // homework
+    const goodBtnEl = document.getElementById('good-button'),
+          awesomeBtnEl = document.getElementById('awesome-button'),
+          burgerEl = document.getElementById('burger'),
+          moodEl = document.getElementById('mood');
+
+    function feelGood() {
+      console.log('I feel really good today');
+      moodEl.textContent = 'I feel really good today!';
+    }
+    function feelAwesome() {
+      console.log('I feel awesome today');
+      moodEl.textContent = 'I feel AWESOME today!';
+    }
+    function burgerOnclickHandler() {
+      console.log('...but very tasty!');
+      alert('Burger is junk-food!');
+    }
+
+    goodBtnEl.addEventListener('click', feelGood);
+    awesomeBtnEl.addEventListener('click', feelAwesome);
+    burgerEl.addEventListener('click', burgerOnclickHandler);
+  </script>
+</body>
+</html>
