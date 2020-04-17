@@ -1,0 +1,90 @@
+body {
+    margin: 0;
+    padding-right: 25px;
+    color: #3F3F3F;
+    font: 3.6rem Sans-serif;
+    background-color: #8CE83C;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    transform: skew(4deg);
+    box-sizing: border-box;
+    min-height: 100vh;
+    width: 67vw;
+    margin: 0 auto;
+    padding: 9vh 0;
+    background-color: #F7BB83;
+}
+
+div {
+    transform: skew(-4deg);
+    box-sizing: border-box;
+}
+
+.output {
+    display: inline-block;
+    text-align: right;
+    margin: auto;
+    min-width: 300px;
+    padding-left: 100px;
+    letter-spacing: 0.2rem;
+}
+
+#number-list {
+    margin: 0;
+    list-style-type: none;
+    border-bottom: 2px solid #3F3F3F;
+    padding-bottom: 5px;
+}
+
+li:last-child::before {
+    content: '+';
+    display: inline-block;
+    margin-right: 20px;
+}
+
+#result {
+    margin: 0;
+    padding-top: 5px;
+}
+
+.form {
+    text-align: center;
+    margin-top: 25px;
+    width: 100%;
+}
+
+#input-form {
+    box-sizing: border-box;
+    border: 2px solid #BACBFF;
+    border-radius: 5px;
+    padding: 0 15px;
+    margin-left: 45px;
+    width: 220px;
+    height: 64px;
+    font: 1.5rem Sans-serif;
+    background-color: #FBD9BA;
+    color: #3F3F3F;
+}
+
+#sum-button {
+    display: inline-block;
+    transform-origin: top left;
+    transform: rotate(2deg);
+    border-radius: 5px;
+    margin: 0 50px;
+    width: 100px;
+    height: 60px;
+    font: 2.2rem Sans-serif;
+    font-weight: bold;
+    color: #3F3F3F;
+    background-color: #BACBFF;
+}
+
+#sum-button span {
+    display: inline-block;
+    transform-origin: top left;
+    transform: rotate(-2deg);
+}
