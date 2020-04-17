@@ -1,0 +1,30 @@
+.mouseover {
+    background-color: pink;
+    border-radius: 5px 10px;
+    font-size: 2em;
+    width: 300px;
+    height: 200px;
+}
+
+.impossible {
+    background-color: green;
+    color: yellow;
+    height: 50px;
+}
+
+.colored {
+    background-color: turquoise;
+}
+
+.tooltip {
+    display: none;
+    border: 1px solid;
+}
+
+.visible {
+    display: inline-block;
+    position: absolute;
+    font-size: 0.7em;
+    padding: 3px;
+    background-color: white;
+}
