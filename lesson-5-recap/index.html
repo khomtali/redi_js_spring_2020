@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strange buttons, Lesson 5</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <div class='wrapper'>
+    <button id="strange-button">I'm a strange button</button>
+  </div>
+
+  <script type="text/javascript">
+    const buttonCmp = document.getElementById('strange-button');
+    const wrapperCmp = document.getElementsByClassName('wrapper')[0];
+    const bodyCmp = document.getElementsByTagName('body')[0];
+    let buttonContent = buttonCmp.innerHTML;
+
+    const additionalCmp = document.createElement('button');
+    additionalCmp.classList.add('impossible');
+    additionalCmp.innerHTML = 'You can\'t press me!';
+    
+    // Tooltip
+    const tooltipCmp = document.createElement('span');
+    tooltipCmp.classList.add('tooltip');
+    tooltipCmp.innerHTML = 'Move out of the button!';
+    wrapperCmp.appendChild(tooltipCmp);
+
+    function toggleClasses() {
+      buttonCmp.classList.toggle('mouseover');
+      bodyCmp.classList.toggle('colored');
+      tooltipCmp.classList.toggle('visible');
+    }
+
+    function clickHandler() {
+      console.log('button was pressed');
+      buttonCmp.innerHTML = 'I\'m the pressed strange button';
+      buttonContent = buttonCmp.innerHTML;
+    }
+    function mouseoverHandler() {
+      console.log('mouseover event');
+      buttonCmp.innerHTML = 'I feel the mouse';
+      toggleClasses();
+      wrapperCmp.appendChild(additionalCmp);
+    }
+    function mouseleaveHandler() {
+      console.log('mouseleave event');
+      buttonCmp.innerHTML = buttonContent;
+      toggleClasses();
+      wrapperCmp.removeChild(additionalCmp);
+    }
+    function mousemoveHandler(event) {
+      let x = event.pageX;
+      let y = event.pageY;
+      let topPosition = y + 15 + 'px';
+      let leftPosition = x + 10 + 'px';
+      tooltipCmp.style.top = topPosition;
+      tooltipCmp.style.left = leftPosition;
+    }
+
+    buttonCmp.addEventListener('click', clickHandler);
+    buttonCmp.addEventListener('mouseover', mouseoverHandler);
+    buttonCmp.addEventListener('mouseleave', mouseleaveHandler);
+    buttonCmp.addEventListener('mousemove', mousemoveHandler);
+  </script>
+</body>
+</html>
