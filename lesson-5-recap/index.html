@@ -24,7 +24,7 @@
     // Tooltip
     const tooltipCmp = document.createElement('span');
     tooltipCmp.classList.add('tooltip');
-    tooltipCmp.innerHTML = 'Move out of the button!'
+    tooltipCmp.innerHTML = 'Move out of the button!';
     wrapperCmp.appendChild(tooltipCmp);
 
     function toggleClasses() {
@@ -42,7 +42,6 @@
       console.log('mouseover event');
       buttonCmp.innerHTML = 'I feel the mouse';
       toggleClasses();
-
       wrapperCmp.appendChild(additionalCmp);
     }
     function mouseleaveHandler() {
