@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator, Lesson 4</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <section>
+    <div class="output">
+      <ul id="number-list">
+      </ul>
+      <p id="result">0</p>
+    </div>
+    <div class="form">
+      <input id="input-form" type="text"></input>  
+      <button id="sum-button"><span>Add</span></button>
+    </div>
+  </section>
+
+  <script type="text/javascript">
+    const inputEl = document.getElementById('input-form');
+    const btnEl = document.getElementById('sum-button');
+    const listEl = document.getElementById('number-list');
+    const resultEl = document.getElementById('result');
+    let sum = 0;
+
+    function addToListAndSum() {
+      const number = parseFloat(inputEl.value);
+      if (!number) return;
+      const newNumberEl = document.createElement('li');
+      newNumberEl.textContent = number;
+      listEl.appendChild(newNumberEl);
+
+      sum += number;
+      resultEl.textContent = sum;
+      inputEl.value = '';
+    }
+
+    btnEl.addEventListener('click', addToListAndSum);
+  </script>
+</body>
+</html>
