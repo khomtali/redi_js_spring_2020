@@ -28,8 +28,7 @@
 
     function addToListAndSum() {
       const number = parseFloat(inputEl.value);
-      if (!number)
-        return;
+      if (!number) return;
       const newNumberEl = document.createElement('li');
       newNumberEl.textContent = number;
       listEl.appendChild(newNumberEl);
