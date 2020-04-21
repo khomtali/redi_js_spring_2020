@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Objects, Lesson 6</title>
+</head>
+<body>
+  <section>
+    <h2>Friend List</h2>
+    <ul class="friend-list">
+    </ul>
+  </section>
+
+  <script type="text/javascript">
+    let book = {
+      title: 'Harry Potter',
+      author: 'J. K. Rowling'
+    };
+    let me = {
+      name: 'Natalia',
+      surname: 'Gubanova',
+      age: 28,
+      residence: {
+        country: 'Germany',
+        city: 'Munich'
+      },
+      favoriteBook: book
+    };
+    let friend = {
+      name: 'Ivan',
+      surname: 'Smolyakov',
+      age: 28,
+      residence: {
+        country: 'Canada',
+        city: 'Ottawa'        
+      },
+      favoriteBook: book
+    };
+
+    const friendListEl = document.querySelector('.friend-list');
+    function displayPerson(person) {
+      const personItemEl = document.createElement('li');
+      personItemEl.innerHTML = `
+        <p>${person.name} ${person.surname}, ${person.age} years old</p>
+        <p>Place of residence: ${person.residence.city}, ${person.residence.country}</p>
+        <p>Favourite book: ${person.favoriteBook.title}, ${person.favoriteBook.author}</p>
+        <button class="js-name-alert">Throw an alert</button>
+      `;
+      friendListEl.appendChild(personItemEl);
+      const btnEl = personItemEl.querySelector('.js-name-alert');
+      btnEl.addEventListener('click', () => {
+          alert(`That is ${person.name} ${person.surname}`);
+      });
+    }
+    displayPerson(me);
+    displayPerson(friend);
+  </script>
+</body>
+</html>
