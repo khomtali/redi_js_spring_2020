@@ -1,0 +1,111 @@
+body {
+  margin: 0;
+  font-family: 'Baloo Thambi 2', cursive;
+  color: #734d80;
+  background-color: #aef2dc;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  padding: 0.5em;
+  font-weight: 600;
+  background-color: #734d80;
+}
+
+main {
+  width: 1024px;
+  margin: auto;
+}
+
+.menu {
+  margin: 0;
+}
+
+.menu__item {
+  display: inline-block;
+  margin: 0 0.5em;
+}
+
+.menu__item__link {
+  text-decoration: none;
+  color: #d492aa;
+}
+
+.menu__item__link:hover, .menu__item__link--active {
+  text-decoration: underline;
+  color: #fff;
+}
+
+.js-product-list {
+  margin: 20px auto;
+  padding: 0;
+  list-style-type: none;
+}
+
+.js-product-list li {
+  display: inline-block;
+}
+
+.js-product-card {
+  display: inline-block;
+  position: relative;
+  width: 230px;
+  background-color: #cdcdcd;
+  margin: 0 10px;
+}
+
+.js-product-card img {
+  background-color: #fff;
+  padding: 10px;
+  width: 210px;
+}
+
+.js-product-card__brand {
+  font-size: 0.5rem;
+  margin-left: 20px;
+  text-transform: uppercase;
+}
+
+.js-product-card__cart-button {
+  position: absolute;
+  right: 10px;
+  top: 205px;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  border: 0;
+  background: #734d80;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.js-product-card__cart-button::before {
+  content: "+";
+  color: #fff;
+}
+
+.js-product-card__cart-button:active {
+  -webkit-transform: translateX(2px) translateY(2px);
+}
+
+.js-product-card > h3, .js-product-card > p {
+  margin: 0 0 0 20px;
+}
+
+.js-product-card__specification {
+  margin: 20px;
+  border: 1px solid;
+  font-size: 0.7rem;
+  background-color: #fff;
+}
+
+.js-product-card__specification > h4, .js-product-card__specification > p {
+  margin: 0 0 0 10px;
+}
+
+#cart h3 {
+  margin: 0 0 0 30px;
+}
