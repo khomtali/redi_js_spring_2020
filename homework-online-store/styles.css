@@ -83,12 +83,24 @@ main {
 }
 
 .js-product-card__cart-button::before {
-  content: "+";
+  content: '+';
   color: #fff;
+}
+
+.js-product-card__cart-button:disabled::before {
+  content: '';
 }
 
 .js-product-card__cart-button:active {
   -webkit-transform: translateX(2px) translateY(2px);
+      -ms-transform: translateX(2px) translateY(2px);
+          transform: translateX(2px) translateY(2px);
+}
+
+.js-product-card__cart-button:disabled {
+  -webkit-transform: translateX(0) translateY(0);
+      -ms-transform: translateX(0) translateY(0);
+          transform: translateX(0) translateY(0);
 }
 
 .js-product-card > h3, .js-product-card > p {
@@ -106,6 +118,35 @@ main {
   margin: 0 0 0 10px;
 }
 
-#cart h3 {
+/* .cart h3 {
   margin: 0 0 0 30px;
+} */
+
+.cart {
+  display: inline-block;
+  padding-left: 30px;
+  font-size: 0.8rem;
+}
+
+.cart button {
+  margin: 0;
+  font-family: 'Baloo Thambi 2', cursive;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border: 1px solid;
+  color: #734d80;
+  background-color: #fff;
+}
+
+.cart button:disabled {
+  background-color: #cdcdcd;
+}
+
+.cart__js-products {
+  margin-top: 20px;
+  padding-left: 20px;
+}
+
+.cart__js-total {
+  font-weight: bold;
 }

@@ -25,13 +25,18 @@
   </header>
   <main>
     <ul class="js-product-list"></ul>
-    <div id="cart">
-      <h3>
+    <div class="cart">
+      <button class="cart__products-button" disabled>Show products in shopping cart</button>
+      <button class="cart__total-button" disabled>Show total price</button>
+      <button class="cart__empty-button" disabled>Empty</button>
+      <ul class="cart__js-products"></ul>
+      <span class="cart__js-total"></span>
+      <!-- <h3>
         In a cart: <span id="cart__count">0</span> products
       </h3>
       <h3>
         Total price: $ <span id="cart__total-price">0</span>
-      </h3>
+      </h3> -->
     </div>
   </main>
 
