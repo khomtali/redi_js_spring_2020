@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Online Store</title>
   <link href="styles.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
 </head>
+
 <body>
   <header>
     <nav>
@@ -25,16 +28,16 @@
   </header>
   <main>
     <ul class="js-product-list"></ul>
-    <div id="cart">
-      <h3>
-        In a cart: <span id="cart__count">0</span> products
-      </h3>
-      <h3>
-        Total price: $ <span id="cart__total-price">0</span>
-      </h3>
+    <div class="cart">
+      <button class="cart__products-button" disabled>Show products in shopping cart</button>
+      <button class="cart__total-button" disabled>Show total price</button>
+      <button class="cart__empty-button" disabled>Empty</button>
+      <ul class="cart__js-products"></ul>
+      <span class="cart__js-total"></span>
     </div>
   </main>
 
   <script src="main.js" type="text/javascript"></script>
 </body>
+
 </html>
