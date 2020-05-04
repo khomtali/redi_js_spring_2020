@@ -12,29 +12,41 @@
 
 <body>
   <header>
-    <nav>
-      <ul class="menu">
-        <li class="menu__item">
-          <a href="" class="menu__item__link">Home</a>
+    <nav class="menu">
+      <button class="menu__button">
+        <span class="menu__button-label">open menu</span>
+      </button>
+      <ul class="menu__list">
+        <li class="menu__list__item">
+          <a href="" class="menu__list__item__link">Home</a>
         </li>
-        <li class="menu__item">
-          <a href="" class="menu__item__link--active">Products</a>
+        <li class="menu__list__item">
+          <a href="" class="menu__list__item__link active">Products</a>
         </li>
-        <li class="menu__item">
-          <a href="" class="menu__item__link">Contact</a>
+        <li class="menu__list__item">
+          <a href="" class="menu__list__item__link">Contact</a>
+        </li>
+      </ul>
+      <ul class="navbar-right">
+        <li>
+          <a href="" class="cart-snippet">
+            <i class="cart-snippet__icon"></i> <span class="cart-snippet__text">Shopping cart</span>
+            <span class="cart-snippet__badge">0</span>
+          </a>
         </li>
       </ul>
     </nav>
   </header>
   <main>
-    <ul class="js-product-list"></ul>
-    <div class="cart">
-      <button class="cart__products-button" disabled>Show products in shopping cart</button>
-      <button class="cart__total-button" disabled>Show total price</button>
-      <button class="cart__empty-button" disabled>Empty</button>
-      <ul class="cart__js-products"></ul>
-      <span class="cart__js-total"></span>
+    <div class="cart hidden">
+      <button class="cart__close"></button>
+      <h2>My shopping cart</h2>
+      <div class="js-cart__list"></div>
+      <hr>
+      <p>Total price: $ <span class="cart__price">0</span></p>
     </div>
+    <h2>Our Products</h2>
+    <ul class="js-product-list"></ul>
   </main>
 
   <script src="main.js" type="text/javascript"></script>
