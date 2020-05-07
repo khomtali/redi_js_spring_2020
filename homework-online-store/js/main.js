@@ -1,75 +1,80 @@
 const token = window.localStorage.getItem('token');
-let goods = [];
-fetch(`https://student-store.travisshears.xyz/store/${token}`, {
-  method: 'GET'
-})
-  .then(response => response.json())
+
+async function getProducts(token) {
+  return response = await fetch(`https://student-store.travisshears.xyz/store/${token}`, {
+    method: 'GET'
+  });
+}
+
+getProducts(token).then(response => response.json())
   .then((data) => {
     console.log(data);
-    renderProducts(data.products);
+    goods = data.products;
+    renderPage(goods);
   })
   .catch((error) => {
     console.error('Error:', error);
   });
 
-// goods.push(burtonBoard, jonesAirheartBoard, gnuBoard, roxyBoard, jonesAviatorBoard);
 // 😀
-function renderProducts(goods) {
-  let goodsInCart = [];
-  const goodsListEl = document.querySelector('.js-product-list');
-  const cartSnippetEl = document.querySelector('.menu__navbar-right__cart-snippet');
-  const badgeEl = cartSnippetEl.querySelector('.menu__navbar-right__cart-snippet__badge');
-  const cartEl = document.querySelector('.cart');
-  const cartListEl = cartEl.querySelector('.js-cart__list');
-  const closeCartEl = cartEl.querySelector('.cart__close');
-  const cartAmountEl = cartEl.querySelector('.cart__price');
-  let amount = 0;
 
-  function makeProductCard(product) {
-    return `
-    <div class="js-product-card">
+const goodsListEl = document.querySelector('.js-product-list');
+const cartSnippetEl = document.querySelector('.menu__navbar-right__cart-snippet');
+const badgeEl = cartSnippetEl.querySelector('.menu__navbar-right__cart-snippet__badge');
+const cartEl = document.querySelector('.cart');
+const cartListEl = cartEl.querySelector('.js-cart__list');
+const closeCartEl = cartEl.querySelector('.cart__close');
+const cartAmountEl = cartEl.querySelector('.cart__price');
+const cartCheckoutBtnEl = cartEl.querySelector('.cart__checkout__button');
+let amount = 0;
+let goods = [];
+let goodsInCart = [];
+
+function makeProductCard(product) {
+  return `
+    <div class="js-product-card ${product.sku}">
       <figure>
         <img src="${product.extra_data.image}" alt="${product.title}">
-        <button class="js-product-card__cart-button plus"></button>
+        <button class="js-product-card__cart-button plus" ${isNull(product.stock) ? 'disabled' : ''}></button>
       </figure>
-      <span class="js-product-card__brand">${product.extra_data.brand}</span>
+      <span class="js-product-card__brand">${product.extra_data.brand}</span>${checkStock(product.stock).outerHTML}
       <h3 id="item-one">${product.extra_data.type}<br>${product.title}</h3>
       <p>$ ${product.price}</p>
       <div class="js-product-card__specification">
         <h4>Specs</h4>
-        <p>Terrain: <span>${product.extra_data.specification.terrain.join(', ')}</span></p>
-        <p>Rocker Type: <span>${product.extra_data.specification.rockerType}</span></p>
-        <p>Flex Rating: <span>${product.extra_data.specification.flexRating}</span></p>
+        <p>Terrain: ${product.extra_data.specification.terrain.join(', ')}</p>
+        <p>Rocker Type: ${product.extra_data.specification.rockerType}</p>
+        <p>Flex Rating: ${product.extra_data.specification.flexRating}</p>
       </div>
     </div>
   `;
+}
+
+function isNull(stock) {
+  if (stock == 0) return;
+  else return false;
+}
+
+function checkStock(stock) {
+  const stockEl = document.createElement('span');
+  stockEl.classList.add('js-product-card__stock');
+  if (stock <= 3) {
+    stockEl.textContent = 'almost out of stock';
+    stockEl.style.color = 'green';
+  } else if (stock == 1) {
+    stockEl.textContent = 'last chance';
+    stockEl.style.color = 'orange';
+  } else if (stock == 0) {
+    stockEl.textContent = 'out of stock';
+    stockEl.style.color = 'red';
   }
+  return stockEl;
+}
 
-  function displayProduct(product) {
-    const productItemEl = document.createElement('li');
-    productItemEl.innerHTML = makeProductCard(product);
-    goodsListEl.appendChild(productItemEl);
-    const addToCartBtnEl = productItemEl.querySelector('.js-product-card__cart-button');
-    addToCartBtnEl.addEventListener('click', () => {
-      if (addToCartBtnEl.classList.contains('plus')) {
-        goodsInCart.push(product);
-        amount += product.price;
-      } else if (addToCartBtnEl.classList.contains('minus')) {
-        goodsInCart.splice(goodsInCart.indexOf(product), 1);
-        amount -= product.price;
-      }
-      badgeEl.textContent = goodsInCart.length;
-      addToCartBtnEl.classList.toggle('plus');
-      addToCartBtnEl.classList.toggle('minus');
-    });
-  }
-
-  goods.forEach(displayProduct);
-
-  function makeProductCardInCart(product) {
-    const productCardEl = document.createElement('div');
-    productCardEl.classList.add('js-cart__list__item');
-    productCardEl.innerHTML = `
+function makeProductCardInCart(product) {
+  const productCardEl = document.createElement('div');
+  productCardEl.classList.add('js-cart__list__item');
+  productCardEl.innerHTML = `
     <hr>
     <img src="${product.extra_data.image}" alt="${product.title}">
     <div class="js-cart__list__info">
@@ -78,14 +83,34 @@ function renderProducts(goods) {
       <span>Price: $ ${product.price}</span>
     </div>
   `; // <button class="js-cart__list__item__delete">delete</button>
-    return productCardEl;
-  }
+  return productCardEl;
+}
 
-  function toggleVisible(element) {
-    element.classList.toggle('hidden');
-  }
+function displayProduct(product) {
+  const productItemEl = document.createElement('li');
+  productItemEl.innerHTML = makeProductCard(product);
+  goodsListEl.appendChild(productItemEl);
+  const addToCartBtnEl = productItemEl.querySelector('.js-product-card__cart-button');
+  addToCartBtnEl.addEventListener('click', () => {
+    if (addToCartBtnEl.classList.contains('plus')) {
+      goodsInCart.push(product);
+      amount += product.price;
+    } else if (addToCartBtnEl.classList.contains('minus')) {
+      goodsInCart.splice(goodsInCart.indexOf(product), 1);
+      amount -= product.price;
+    }
+    badgeEl.textContent = goodsInCart.length;
+    addToCartBtnEl.classList.toggle('plus');
+    addToCartBtnEl.classList.toggle('minus');
+  });
+}
 
-  closeCartEl.addEventListener('click', () => toggleVisible(cartEl));
+function toggleVisible(element) {
+  element.classList.toggle('hidden');
+}
+
+function renderPage(goods) {
+  goods.forEach(displayProduct);
   cartSnippetEl.addEventListener('click', event => {
     event.preventDefault();
     if (goodsInCart.length == 0) return;
@@ -104,4 +129,36 @@ function renderProducts(goods) {
     }, 0);
     toggleVisible(cartEl);
   });
+  closeCartEl.addEventListener('click', () => toggleVisible(cartEl));
 }
+
+function renderStock(good) {
+  const goodItemEl = document.querySelector(`.${good.sku}`);
+  goodItemEl.querySelector('.js-product-card__cart-button').disabled = isNull(good.stock);
+  goodItemEl.querySelector('.js-product-card__brand').nextElementSibling = checkStock(good.stock).outerHTML;
+}
+
+async function deleteFromStock(token, sku) {
+  return response = await fetch(`https://student-store.travisshears.xyz/buy/${sku}?token=${token}`, {
+    method: 'GET'
+  });
+}
+
+function buyProducts(goodsInCart) {
+  goodsInCart.forEach(good => {
+    deleteFromStock(token, good.sku).then(response => response.json())
+      .then((data) => {
+        console.log(data);
+        renderStock(good);
+        goodsInCart = []; // put '+' on all buttons
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }); 
+}
+
+cartCheckoutBtnEl.addEventListener('click', () => {
+  buyProducts(goodsInCart);
+  toggleVisible(cartEl);
+});

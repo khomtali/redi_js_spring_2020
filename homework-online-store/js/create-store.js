@@ -85,7 +85,7 @@ const jsonData = {
   ]
 };
 
-async function postRequest(url, data) {
+async function createStore(url, data) {
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -96,13 +96,13 @@ async function postRequest(url, data) {
   return response.json();
 }
 
-if(!window.localStorage.getItem('token')) {
-  postRequest('https://student-store.travisshears.xyz/store', jsonData)
+if (!window.localStorage.getItem('token')) {
+  createStore('https://student-store.travisshears.xyz/store', jsonData)
     .then((data) => {
       console.log(data);
       window.localStorage.setItem('token', data.store_id);
     })
     .catch((error) => {
-      console.error('Error:', error); 
-  });
+      console.error('Error:', error);
+    });
 } else console.log('token is already stored');
