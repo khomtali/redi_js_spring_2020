@@ -17,8 +17,8 @@ fetch(`https://student-store.travisshears.xyz/store/${token}`, {
 function renderProducts(goods) {
   let goodsInCart = [];
   const goodsListEl = document.querySelector('.js-product-list');
-  const cartSnippetEl = document.querySelector('.cart-snippet');
-  const badgeEl = cartSnippetEl.querySelector('.cart-snippet__badge');
+  const cartSnippetEl = document.querySelector('.menu__navbar-right__cart-snippet');
+  const badgeEl = cartSnippetEl.querySelector('.menu__navbar-right__cart-snippet__badge');
   const cartEl = document.querySelector('.cart');
   const cartListEl = cartEl.querySelector('.js-cart__list');
   const closeCartEl = cartEl.querySelector('.cart__close');

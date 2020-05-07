@@ -1,0 +1,23 @@
+@font-face{
+  font-family: fontello;
+  src: url('/font/fontello.woff2') format('woff2'),
+  url('/font/fontello.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  font-family: 'Baloo Thambi 2', cursive;
+  color: #734d80;
+  background-color: #f7e9eb;
+}
+
+.hidden {
+  display: none;
+}
