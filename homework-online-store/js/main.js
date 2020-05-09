@@ -1,16 +1,16 @@
 const token = window.localStorage.getItem('token');
 
 async function getProducts(token) {
-  return response = await fetch(`https://student-store.travisshears.xyz/store/${token}`, {
+  return await fetch(`https://student-store.travisshears.xyz/store/${token}`, {
     method: 'GET'
   });
 }
 
-getProducts(token).then(response => response.json())
+getProducts(token)
+  .then(response => response.json())
   .then((data) => {
     console.log(data);
-    goods = data.products;
-    renderPage(goods);
+    renderPage(data.products);
   })
   .catch((error) => {
     console.error('Error:', error);
@@ -27,7 +27,6 @@ const closeCartEl = cartEl.querySelector('.cart__close');
 const cartAmountEl = cartEl.querySelector('.cart__price');
 const cartCheckoutBtnEl = cartEl.querySelector('.cart__checkout__button');
 let amount = 0;
-let goods = [];
 let goodsInCart = [];
 
 function makeProductCard(product) {
@@ -139,18 +138,19 @@ function renderStock(good) {
 }
 
 async function deleteFromStock(token, sku) {
-  return response = await fetch(`https://student-store.travisshears.xyz/buy/${sku}?token=${token}`, {
+  return await fetch(`https://student-store.travisshears.xyz/buy/${sku}?token=${token}`, {
     method: 'GET'
   });
 }
 
 function buyProducts(goodsInCart) {
   goodsInCart.forEach(good => {
-    deleteFromStock(token, good.sku).then(response => response.json())
+    deleteFromStock(token, good.sku)
+      .then(response => response.json())
       .then((data) => {
         console.log(data);
-        renderStock(good);
-        goodsInCart = []; // put '+' on all buttons
+        // renderStock(good);
+        goodsInCart = [];
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -160,5 +160,5 @@ function buyProducts(goodsInCart) {
 
 cartCheckoutBtnEl.addEventListener('click', () => {
   buyProducts(goodsInCart);
-  toggleVisible(cartEl);
+  toggleVisible(cartEl); // then put '+' on all buttons
 });
