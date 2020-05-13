@@ -1,23 +1,3 @@
-const token = window.localStorage.getItem('token');
-
-async function getProducts(token) {
-  return await fetch(`https://student-store.travisshears.xyz/store/${token}`, {
-    method: 'GET'
-  });
-}
-
-getProducts(token)
-  .then(response => response.json())
-  .then((data) => {
-    console.log(data);
-    renderPage(data.products);
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
-
-// 😀
-
 const goodsListEl = document.querySelector('.js-product-list');
 const cartSnippetEl = document.querySelector('.menu__navbar-right__cart-snippet');
 const badgeEl = cartSnippetEl.querySelector('.menu__navbar-right__cart-snippet__badge');
@@ -28,10 +8,12 @@ const cartAmountEl = cartEl.querySelector('.cart__price');
 const cartCheckoutBtnEl = cartEl.querySelector('.cart__checkout__button');
 let amount = 0;
 let goodsInCart = [];
+let skuInCart = [];
+const token = window.localStorage.getItem('token');
 
 function makeProductCard(product) {
   return `
-    <div class="js-product-card ${product.sku}">
+    <div class="js-product-card">
       <figure>
         <img src="${product.extra_data.image}" alt="${product.title}">
         <button class="js-product-card__cart-button plus" ${isNull(product.stock) ? 'disabled' : ''}></button>
@@ -49,15 +31,25 @@ function makeProductCard(product) {
   `;
 }
 
-function isNull(stock) {
-  if (stock == 0) return;
-  else return false;
+function makeProductCardInCart(product) {
+  const productCardEl = document.createElement('div');
+  productCardEl.classList.add('js-cart__list__item');
+  productCardEl.innerHTML = `
+    <hr>
+    <img src="${product.extra_data.image}" alt="${product.title}">
+    <div class="js-cart__list__info">
+      <h4>${product.extra_data.brand} ${product.extra_data.type}</h4>
+      <span>${product.title}</span><br>
+      <span>Price: $ ${product.price}</span>
+    </div>
+  `;
+  return productCardEl;
 }
 
 function checkStock(stock) {
   const stockEl = document.createElement('span');
   stockEl.classList.add('js-product-card__stock');
-  if (stock <= 3) {
+  if (stock < 4 && stock > 1) {
     stockEl.textContent = 'almost out of stock';
     stockEl.style.color = 'green';
   } else if (stock == 1) {
@@ -70,58 +62,56 @@ function checkStock(stock) {
   return stockEl;
 }
 
-function makeProductCardInCart(product) {
-  const productCardEl = document.createElement('div');
-  productCardEl.classList.add('js-cart__list__item');
-  productCardEl.innerHTML = `
-    <hr>
-    <img src="${product.extra_data.image}" alt="${product.title}">
-    <div class="js-cart__list__info">
-      <h4>${product.extra_data.brand} ${product.extra_data.type}</h4>
-      <span>${product.title}</span><br>
-      <span>Price: $ ${product.price}</span>
-    </div>
-  `; // <button class="js-cart__list__item__delete">delete</button>
-  return productCardEl;
-}
-
-function displayProduct(product) {
-  const productItemEl = document.createElement('li');
-  productItemEl.innerHTML = makeProductCard(product);
-  goodsListEl.appendChild(productItemEl);
-  const addToCartBtnEl = productItemEl.querySelector('.js-product-card__cart-button');
-  addToCartBtnEl.addEventListener('click', () => {
-    if (addToCartBtnEl.classList.contains('plus')) {
-      goodsInCart.push(product);
-      amount += product.price;
-    } else if (addToCartBtnEl.classList.contains('minus')) {
-      goodsInCart.splice(goodsInCart.indexOf(product), 1);
-      amount -= product.price;
-    }
-    badgeEl.textContent = goodsInCart.length;
-    addToCartBtnEl.classList.toggle('plus');
-    addToCartBtnEl.classList.toggle('minus');
-  });
+function isNull(stock) {
+  if (stock == 0) return true;
 }
 
 function toggleVisible(element) {
   element.classList.toggle('hidden');
 }
 
+function togglePlusMinus(element) {
+  element.classList.toggle('plus');
+  element.classList.toggle('minus');
+}
+
+function displayProductCard(product) {
+  const productItemEl = document.createElement('li');
+  productItemEl.id = product.sku;
+  productItemEl.innerHTML = makeProductCard(product);
+  goodsListEl.appendChild(productItemEl);
+  const addToCartBtnEl = productItemEl.querySelector('.js-product-card__cart-button');
+  addToCartBtnEl.addEventListener('click', () => {
+    if (addToCartBtnEl.classList.contains('plus'))
+      goodsInCart.push(product);
+    else if (addToCartBtnEl.classList.contains('minus'))
+      goodsInCart.splice(goodsInCart.indexOf(product), 1);
+    badgeEl.textContent = goodsInCart.length;
+    togglePlusMinus(addToCartBtnEl);
+  });
+}
+
+function updateProductCard(product) {
+  const productItemEl = goodsListEl.querySelector(`#${product.sku}`);
+  togglePlusMinus(productItemEl.querySelector('.js-product-card__cart-button'));
+  renderStock(product);
+}
+
+function clearCart() {
+  goodsInCart = [];
+  badgeEl.textContent = 0;
+  cartListEl.innerHTML = '';
+  cartAmountEl.textContent = 0;
+}
+
 function renderPage(goods) {
-  goods.forEach(displayProduct);
+  goods.forEach(displayProductCard);
   cartSnippetEl.addEventListener('click', event => {
     event.preventDefault();
     if (goodsInCart.length == 0) return;
     cartListEl.innerHTML = '';
     goodsInCart.forEach(good => {
       cartListEl.appendChild(makeProductCardInCart(good));
-      // const deleteBtnEl = cartEl.querySelector('.js-cart__list__item__delete');
-      // deleteBtnEl.addEventListener('click', event => {
-      //   console.log(event.target.parentNode);
-      //   const delEl = event.target.parentNode;
-      //   cartListEl.removeChild(delEl);
-      // });
     });
     cartAmountEl.textContent = goodsInCart.reduce((total, product) => {
       return total + product.price;
@@ -132,14 +122,20 @@ function renderPage(goods) {
 }
 
 function renderStock(good) {
-  const goodItemEl = document.querySelector(`.${good.sku}`);
+  const goodItemEl = document.querySelector(`#${good.sku}`);
   goodItemEl.querySelector('.js-product-card__cart-button').disabled = isNull(good.stock);
   goodItemEl.querySelector('.js-product-card__brand').nextElementSibling = checkStock(good.stock).outerHTML;
 }
 
+async function getProducts(token) {
+  return await fetch(`https://student-store.travisshears.xyz/store/${token}`, {
+    method: 'GET'
+  });
+}
+
 async function deleteFromStock(token, sku) {
   return await fetch(`https://student-store.travisshears.xyz/buy/${sku}?token=${token}`, {
-    method: 'GET'
+    method: 'POST'
   });
 }
 
@@ -148,17 +144,39 @@ function buyProducts(goodsInCart) {
     deleteFromStock(token, good.sku)
       .then(response => response.json())
       .then((data) => {
-        console.log(data);
-        // renderStock(good);
-        goodsInCart = [];
+        skuInCart.push(good.sku);
       })
       .catch((error) => {
         console.error('Error:', error);
       });
-  }); 
+  });
+  getProducts(token)
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data);
+      data.products.forEach(product => {
+        if (skuInCart.indexOf(product.sku) !== -1)
+          updateProductCard(product);
+      });
+      skuInCart = [];
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 }
+
+getProducts(token)
+  .then(response => response.json())
+  .then((data) => {
+    console.log(data);
+    renderPage(data.products);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
 
 cartCheckoutBtnEl.addEventListener('click', () => {
   buyProducts(goodsInCart);
-  toggleVisible(cartEl); // then put '+' on all buttons
+  clearCart();
+  toggleVisible(cartEl);
 });
