@@ -39,7 +39,6 @@ main h2 {
 @media (min-width: 480px) and (max-width: 767px) {
   .js-product-list li {
     width: 49%;
-    /* font-size: 17px; */
   }
   .js-product-list li:nth-of-type(odd) {
     margin-right: 2%;
@@ -50,7 +49,6 @@ main h2 {
   .js-product-list li {
     width: 32.33%;
     margin-right: 1.5%;
-    /* font-size: 17px; */
   }
   .js-product-list li:nth-of-type(3n + 3) {
     margin-right: 0;
@@ -61,7 +59,6 @@ main h2 {
   .js-product-list li {
     width: 24%;
     margin-right: 1.33%;
-    /* font-size: 17px; */
   }
   .js-product-list li:nth-of-type(4n + 4) {
     margin-right: 0;
@@ -127,6 +124,14 @@ main h2 {
   color: #fff;
 }
 
+.js-product-card__cart-button:disabled {
+  cursor: auto;
+}
+
+.js-product-card__cart-button:disabled.plus::before {
+  content: '';
+}
+
 .js-product-card__cart-button:active {
   -webkit-transform: translateX(2px) translateY(2px);
       -ms-transform: translateX(2px) translateY(2px);
@@ -138,6 +143,13 @@ main h2 {
   margin-top: 8px;
   font-weight: bold;
   text-transform: uppercase;
+}
+
+@media (max-width: 479px) {
+  .js-product-card span {
+    margin-top: 6px;
+    font-size: 0.6rem;
+  }
 }
 
 .js-product-card__brand {

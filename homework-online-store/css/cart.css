@@ -3,11 +3,22 @@
   top: 50vh;
   right: 50vw;
   transform: translate(50%, -50%);
-  min-width: 450px;
   z-index: 999;
   background-color: #fff;
   padding: 25px;
   box-shadow: 0 0 100vh 100vw rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 479px) {
+  .cart {
+    width: 90vw;
+  }
+}
+
+@media (min-width: 480px) {
+  .cart {
+    min-width: 450px;
+  }
 }
 
 .cart__close {
@@ -85,7 +96,6 @@
 .cart__checkout__button {
   border: none;
   border-radius: 5px;
-  /* height: 2.8rem; */
   text-transform: uppercase;
   color: #fff;
   background-color: #734d80;
