@@ -100,7 +100,7 @@ if (!window.localStorage.getItem('token')) {
   createStore('https://student-store.travisshears.xyz/store', jsonData)
     .then((data) => {
       console.log(data);
-      window.localStorage.setItem('token', data.store_id);
+      window.localStorage.setItem('token', data.token);
     })
     .catch((error) => {
       console.error('Error:', error);
