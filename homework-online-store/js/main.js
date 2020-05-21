@@ -1,8 +1,8 @@
-const goodsListEl = document.querySelector('.js-product-list');
+const goodsListEl = document.querySelector('.product-list');
 const cartSnippetEl = document.querySelector('.menu__navbar-right__cart-snippet');
 const badgeEl = cartSnippetEl.querySelector('.menu__navbar-right__cart-snippet__badge');
 const cartEl = document.querySelector('.cart');
-const cartListEl = cartEl.querySelector('.js-cart__list');
+const cartListEl = cartEl.querySelector('.cart__list');
 const closeCartEl = cartEl.querySelector('.cart__close');
 const cartAmountEl = cartEl.querySelector('.cart__price');
 const cartCheckoutBtnEl = cartEl.querySelector('.cart__checkout__button');
@@ -13,15 +13,15 @@ const token = window.localStorage.getItem('token');
 
 function makeProductCard(product) {
   return `
-    <div class="js-product-card">
+    <div class="product-card">
       <figure>
         <img src="${product.extra_data.image}" alt="${product.title}">
-        <button class="js-product-card__cart-button plus" ${isNull(product.stock) ? 'disabled' : ''}></button>
+        <button class="product-card__cart-button plus" ${isNull(product.stock) ? 'disabled' : ''}></button>
       </figure>
-      <span class="js-product-card__brand">${product.extra_data.brand}</span>${checkStock(product.stock).outerHTML}
+      <span class="product-card__brand">${product.extra_data.brand}</span>${checkStock(product.stock).outerHTML}
       <h3 id="item-one">${product.extra_data.type}<br>${product.title}</h3>
       <p>$ ${product.price}</p>
-      <div class="js-product-card__specification">
+      <div class="product-card__specification">
         <h4>Specs</h4>
         <p>Terrain: ${product.extra_data.specification.terrain.join(', ')}</p>
         <p>Rocker Type: ${product.extra_data.specification.rockerType}</p>
@@ -33,11 +33,11 @@ function makeProductCard(product) {
 
 function makeProductCardInCart(product) {
   const productCardEl = document.createElement('div');
-  productCardEl.classList.add('js-cart__list__item');
+  productCardEl.classList.add('cart__list__item');
   productCardEl.innerHTML = `
     <hr>
     <img src="${product.extra_data.image}" alt="${product.title}">
-    <div class="js-cart__list__info">
+    <div class="cart__list__info">
       <h4>${product.extra_data.brand} ${product.extra_data.type}</h4>
       <span>${product.title}</span><br>
       <span>Price: $ ${product.price}</span>
@@ -48,7 +48,7 @@ function makeProductCardInCart(product) {
 
 function checkStock(stock) {
   const stockEl = document.createElement('span');
-  stockEl.classList.add('js-product-card__stock');
+  stockEl.classList.add('product-card__stock');
   if (stock < 4 && stock > 1) {
     stockEl.textContent = 'almost out of stock';
     stockEl.style.color = 'green';
@@ -80,7 +80,7 @@ function displayProductCard(product) {
   productItemEl.id = product.sku;
   productItemEl.innerHTML = makeProductCard(product);
   goodsListEl.appendChild(productItemEl);
-  const addToCartBtnEl = productItemEl.querySelector('.js-product-card__cart-button');
+  const addToCartBtnEl = productItemEl.querySelector('.product-card__cart-button');
   addToCartBtnEl.addEventListener('click', () => {
     if (addToCartBtnEl.classList.contains('plus'))
       goodsInCart.push(product);
@@ -93,7 +93,7 @@ function displayProductCard(product) {
 
 function updateProductCard(product) {
   const productItemEl = goodsListEl.querySelector(`#${product.sku}`);
-  togglePlusMinus(productItemEl.querySelector('.js-product-card__cart-button'));
+  togglePlusMinus(productItemEl.querySelector('.product-card__cart-button'));
   renderStock(product);
 }
 
@@ -123,8 +123,8 @@ function renderPage(goods) {
 
 function renderStock(good) {
   const goodItemEl = document.querySelector(`#${good.sku}`);
-  goodItemEl.querySelector('.js-product-card__cart-button').disabled = isNull(good.stock);
-  goodItemEl.querySelector('.js-product-card__brand').nextElementSibling = checkStock(good.stock).outerHTML;
+  goodItemEl.querySelector('.product-card__cart-button').disabled = isNull(good.stock);
+  goodItemEl.querySelector('.product-card__brand').nextElementSibling = checkStock(good.stock).outerHTML;
 }
 
 async function getProducts(token) {
