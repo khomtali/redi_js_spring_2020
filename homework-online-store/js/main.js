@@ -82,10 +82,9 @@ function displayProductCard(product) {
   goodsListEl.appendChild(productItemEl);
   const addToCartBtnEl = productItemEl.querySelector('.product-card__cart-button');
   addToCartBtnEl.addEventListener('click', () => {
-    if (addToCartBtnEl.classList.contains('plus'))
+    if (goodsInCart.indexOf(product) == -1)
       goodsInCart.push(product);
-    else if (addToCartBtnEl.classList.contains('minus'))
-      goodsInCart.splice(goodsInCart.indexOf(product), 1);
+    else goodsInCart.splice(goodsInCart.indexOf(product), 1);
     badgeEl.textContent = goodsInCart.length;
     togglePlusMinus(addToCartBtnEl);
   });
@@ -94,7 +93,7 @@ function displayProductCard(product) {
 function updateProductCard(product) {
   const productItemEl = goodsListEl.querySelector(`#${product.sku}`);
   togglePlusMinus(productItemEl.querySelector('.product-card__cart-button'));
-  renderStock(product);
+  renderStock(product.stock, productItemEl);
 }
 
 function clearCart() {
@@ -121,10 +120,9 @@ function renderPage(goods) {
   closeCartEl.addEventListener('click', () => toggleVisible(cartEl));
 }
 
-function renderStock(good) {
-  const goodItemEl = document.querySelector(`#${good.sku}`);
-  goodItemEl.querySelector('.product-card__cart-button').disabled = isNull(good.stock);
-  goodItemEl.querySelector('.product-card__brand').nextElementSibling = checkStock(good.stock).outerHTML;
+function renderStock(stock, productItemEl) {
+  productItemEl.querySelector('.product-card__cart-button').disabled = isNull(stock);
+  productItemEl.querySelector('.product-card__brand').nextElementSibling = checkStock(stock);
 }
 
 async function getProducts(token) {
