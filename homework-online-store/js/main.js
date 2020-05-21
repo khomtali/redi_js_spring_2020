@@ -122,7 +122,8 @@ function renderPage(goods) {
 
 function renderStock(stock, productItemEl) {
   productItemEl.querySelector('.product-card__cart-button').disabled = isNull(stock);
-  productItemEl.querySelector('.product-card__brand').nextElementSibling = checkStock(stock);
+  productItemEl.querySelector('.product-card__stock').style.color = checkStock(stock).style.color;
+  productItemEl.querySelector('.product-card__stock').textContent = checkStock(stock).textContent;
 }
 
 async function getProducts(token) {
